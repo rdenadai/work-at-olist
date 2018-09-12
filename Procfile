@@ -1,1 +1,1 @@
-web: gunicorn wsgi --workers=3 --reload
+web: pytest; gunicorn wsgi --workers=3 --reload
