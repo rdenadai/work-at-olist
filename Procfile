@@ -1,0 +1,1 @@
+web: gunicorn wsgi --workers=3 --reload
