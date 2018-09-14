@@ -1,5 +1,5 @@
 import os
-import urlparse
+from urllib.parse import urlparse
 from flask import Flask
 from peewee import *
 from .controllers.principal import principal
