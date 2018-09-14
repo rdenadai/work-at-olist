@@ -1,6 +1,7 @@
 import os
 import dj_database_url
 from flask import Flask
+from flask_assets import Environment, Bundle
 from peewee import *
 from .controllers.principal import principal
 from .controllers.api import api
@@ -9,6 +10,15 @@ from .settings import DevelopmentConfig, ProductionConfig
 
 # Start the flask app
 application = Flask(__name__)
+
+# Assets
+# ---------------
+assets = Environment()
+js = Bundle('js/highlight.pack.js', filters='jsmin', output='gen/packed.js')
+css = Bundle('css/default.css', 'css/zenburn.css', filters='cssmin', output='gen/packed.css')
+assets.register('js_all', js)
+assets.register('css_all', css)
+assets.init_app(application)
 
 # Configuration
 # ---------------
