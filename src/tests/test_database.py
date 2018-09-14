@@ -1,11 +1,16 @@
-from ..models.models import Telephone, Call, Bill
+from ..models.models import Telephone, Call, Bill, BillHistory
 from .data.database_data import *
 
 
 def clean_data():
     q = Call.delete().where(Call.source == call_data['source'])
     q.execute()
-    q = Bill.delete().where(Bill.owner == bill_data['owner'], Bill.reference_month == bill_data['reference_month'])
+    q = BillHistory.delete().where(
+        BillHistory.destination == bill_history_data['destination'],
+        BillHistory.reference_month == bill_history_data['reference_month']
+    )
+    q.execute()
+    q = Bill.delete().where(Bill.destination == bill_data['destination'])
     q.execute()
     q = Telephone.delete().where(Telephone.number == telephone_source_data['number'])
     q.execute()
@@ -35,7 +40,14 @@ def test_insert_call():
 
 
 def test_insert_bill():
-    bill_data['owner'] = get_telephone(telephone_source_data)
+    bill_data['destination'] = get_telephone(telephone_source_data)
     Bill.create(**bill_data)
     assert Bill.get_or_none(**bill_data)
+    clean_data()
+
+
+def test_insert_bill_history():
+    bill_history_data['destination'] = get_telephone(telephone_source_data)
+    BillHistory.create(**bill_history_data)
+    assert BillHistory.get_or_none(**bill_history_data)
     clean_data()

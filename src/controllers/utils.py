@@ -11,8 +11,8 @@ def api_data_return():
             start = time()
             data = {
                 'status': 405,
-                'execution_time': 0,
                 'success': False,
+                'execution_time': 0,
                 'message': 'Method Not Allowed',
                 'result': None
             }

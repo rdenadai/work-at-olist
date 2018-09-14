@@ -24,11 +24,23 @@ class Call(Model):
 
 
 class Bill(Model):
-    owner = ForeignKeyField(Telephone, index=True)
+    destination = ForeignKeyField(Telephone, index=True)
+    call_start_date = DateField()
+    call_start_time = TimeField()
+    call_duration = CharField(max_length=50)
+    call_price = FloatField()
+
+    class Meta:
+        database = db_conn
+        table_name = 'bill'
+
+
+class BillHistory(Model):
+    destination = ForeignKeyField(Telephone, index=True)
     reference_month = DateField(index=True)
     total_minutes = IntegerField()
     total_amount = FloatField()
 
     class Meta:
         database = db_conn
-        table_name = 'bill'
+        table_name = 'bill_history'
