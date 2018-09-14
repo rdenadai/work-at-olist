@@ -3,17 +3,17 @@ from datetime import datetime
 
 
 telephone_source_data = {
-    'number': '55999999999',
-    'name': 'XXXXXXXXXXXXXXXXXXXXXXX'
+    'number': '99999999999',
+    'name': 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 }
 telephone_destination_data = {
-    'number': '55999999998',
-    'name': 'XXXXXXXXXXXXXXXXXXXXXXX'
+    'number': '99999999998',
+    'name': 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXY'
 }
 call_data = {
     'type': 'start',
     'timestamp': time(),
-    'call_id': 70,
+    'call_id': 1,
     'source': None,
     'destination': None,
 }
