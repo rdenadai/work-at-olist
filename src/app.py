@@ -1,5 +1,5 @@
 import os
-from urllib import parse
+import dj_database_url
 from flask import Flask
 from peewee import *
 from .controllers.principal import principal
@@ -25,14 +25,13 @@ db_conn = None
 if application.config.get('DATABASE_TYPE') == 'sqlite':
     db_conn = SqliteDatabase(application.config.get('DATABASE_CONN'))
 elif application.config.get('DATABASE_TYPE') == 'psql':
-    parse.uses_netloc.append('postgres')
-    url = parse.urlparse(application.config.get('DATABASE_CONN'))
+    conn = dj_database_url.parse(application.config.get('DATABASE_CONN'))
     db_conn = PostgresqlDatabase({
-        'name': url.path[1:],
-        'user': url.username,
-        'password': url.password,
-        'host': url.hostname,
-        'port': url.port,
+        'name': conn['NAME'],
+        'user': conn['USER'],
+        'password': conn['PASSWORD'],
+        'host': conn['HOST'],
+        'port': conn['PORT'],
     })
 
 # Controllers
