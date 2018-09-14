@@ -26,13 +26,13 @@ if application.config.get('DATABASE_TYPE') == 'sqlite':
     db_conn = SqliteDatabase(application.config.get('DATABASE_CONN'))
 elif application.config.get('DATABASE_TYPE') == 'psql':
     conn = dj_database_url.parse(application.config.get('DATABASE_CONN'))
-    db_conn = PostgresqlDatabase({
-        'name': conn['NAME'],
+    data = {
         'user': conn['USER'],
         'password': conn['PASSWORD'],
         'host': conn['HOST'],
         'port': conn['PORT'],
-    })
+    }
+    db_conn = PostgresqlDatabase(conn['NAME'], **data)
 
 # Controllers
 # ---------------
