@@ -26,7 +26,7 @@ if application.config.get('DATABASE_TYPE') == 'sqlite':
     db_conn = SqliteDatabase(application.config.get('DATABASE_CONN'))
 elif application.config.get('DATABASE_TYPE') == 'psql':
     parse.uses_netloc.append('postgres')
-    url = parse.urlparse.urlparse(application.config.get('DATABASE_CONN'))
+    url = parse.urlparse(application.config.get('DATABASE_CONN'))
     db_conn = PostgresqlDatabase({
         'name': url.path[1:],
         'user': url.username,
