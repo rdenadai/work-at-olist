@@ -6,14 +6,14 @@ from .settings import DevelopmentConfig, ProductionConfig
 
 
 # Start the flask app
-app = Flask(__name__)
+application = Flask(__name__)
 
 # Import configuration depending on the environment
 if os.environ.get('PYTHONHOME', None):
-    app.config.from_object(ProductionConfig)
+    application.config.from_object(ProductionConfig)
 else:
-    app.config.from_object(DevelopmentConfig)
+    application.config.from_object(DevelopmentConfig)
 
 # Register the apps blueprint endpoints
-app.register_blueprint(principal)
-app.register_blueprint(api)
+application.register_blueprint(principal)
+application.register_blueprint(api)
