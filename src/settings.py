@@ -5,7 +5,7 @@ class Config:
     DEBUG = True
     TESTING = True
     DATABASE_TYPE = 'sqlite'
-    DATABASE = 'localhost.db'
+    DATABASE_CONN = 'localhost.db'
 
 
 class DevelopmentConfig(Config):
@@ -15,4 +15,4 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     TESTING = True
     DATABASE_TYPE = 'psql'
-    DATABASE = os.environ.get('DATABASE_URL')
+    DATABASE_CONN = os.environ.get('DATABASE_URL')
