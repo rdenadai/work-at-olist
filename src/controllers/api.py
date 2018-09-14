@@ -5,7 +5,7 @@ from .utils import api_data_return
 api = Blueprint('api', __name__)
 
 
-@api.route('/call/start/', methods=['GET', 'POST'])
+@api.route('/call/start/', methods=['POST'])
 @api_data_return()
 def call_start(data):
     if request.method == 'POST':
@@ -13,7 +13,7 @@ def call_start(data):
     return data
 
 
-@api.route('/call/end/', methods=['GET', 'POST'])
+@api.route('/call/end/', methods=['POST'])
 @api_data_return()
 def call_end(data):
     if request.method == 'POST':
