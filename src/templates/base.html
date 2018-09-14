@@ -10,6 +10,10 @@
         .page-content {
             padding: 10px;
         }
+        .demo-card-wide.mdl-card {
+            width: 916px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -33,7 +37,9 @@
             </nav>
         </div>
         <main class="mdl-layout__content">
-            <div class="page-content">{% block content %}{% endblock %}</div>
+            <div class="page-content">
+                {% block content %}{% endblock %}
+            </div>
         </main>
     </div>
 </body>

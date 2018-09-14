@@ -1,5 +1,29 @@
 {% extends './base.html' %}
 
 {% block content %}
-Boilerplate template...
+<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">API Information</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+        <p>There are 3 (tree) api endpoints to be used:</p>
+        <ul>
+            <li><a href="call/start/">call/start/</a></li>
+            <li><a href="call/start/">call/end/</a></li>
+            <li><a href="telephone/bill/">telephone/bill/</a></li>
+        </ul>
+        <p>
+            The first and second api calls only accept <strong>POST</strong> method. Because the record in database operations
+            about the call.
+        </p>
+        <p>
+            The third accept <strong>GET or POST</strong> method, and returns information about the telephone bill.
+        </p>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Get Started
+        </a>
+    </div>
+</div>
 {% endblock %}
