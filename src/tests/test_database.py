@@ -27,11 +27,13 @@ def get_telephone(data):
 # ---------
 
 def test_insert_telephone():
+    clean_data()
     assert get_telephone(telephone_source_data)
     clean_data()
 
 
 def test_insert_call():
+    clean_data()
     call_data['source'] = get_telephone(telephone_source_data)
     call_data['destination'] = get_telephone(telephone_destination_data)
     Call.create(**call_data)
@@ -40,6 +42,7 @@ def test_insert_call():
 
 
 def test_insert_bill():
+    clean_data()
     bill_data['destination'] = get_telephone(telephone_source_data)
     Bill.create(**bill_data)
     assert Bill.get_or_none(**bill_data)
@@ -47,6 +50,7 @@ def test_insert_bill():
 
 
 def test_insert_bill_history():
+    clean_data()
     bill_history_data['destination'] = get_telephone(telephone_source_data)
     BillHistory.create(**bill_history_data)
     assert BillHistory.get_or_none(**bill_history_data)
