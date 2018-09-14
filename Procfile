@@ -1,1 +1,1 @@
-web: pytest; gunicorn wsgi --workers=3 --reload
+web: python -m src.sync_db; pytest; gunicorn wsgi --workers=3 --reload
