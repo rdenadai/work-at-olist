@@ -1,10 +1,8 @@
 from flask import Flask
-from flask import render_template
+from .controllers.principal import principal
+from .controllers.api import api
 
 
 app = Flask(__name__)
-
-
-@app.route("/")
-def documentation():
-    return render_template('docs/documentation.html')
+app.register_blueprint(principal)
+app.register_blueprint(api)
