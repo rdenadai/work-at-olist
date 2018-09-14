@@ -1,6 +1,7 @@
 import os
 import dj_database_url
 from flask import Flask
+from flask_cors import CORS
 from flask_assets import Environment, Bundle
 from peewee import *
 from .controllers.principal import principal
@@ -8,8 +9,9 @@ from .controllers.api import api
 from .settings import DevelopmentConfig, ProductionConfig
 
 
-# Start the flask app
+# Start the flask app | Correcting CORS
 application = Flask(__name__)
+cors = CORS(application, resources={r"/*": {"origins": "*"}})
 
 # Assets
 # ---------------

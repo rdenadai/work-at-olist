@@ -6,6 +6,7 @@ class Config:
     TESTING = True
     DATABASE_TYPE = 'sqlite'
     DATABASE_CONN = 'localhost.db'
+    CORS_HEADERS = 'Content-Type'
 
 
 class DevelopmentConfig(Config):
