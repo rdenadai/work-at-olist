@@ -2,7 +2,6 @@ import pytest
 import rapidjson
 from ..app import application
 from .data.database_data import *
-from ..models.models import Telephone, Call, Bill, BillHistory
 from .test_database import clean_data
 
 
