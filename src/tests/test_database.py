@@ -1,9 +1,11 @@
-from ..models.models import Telephone, Call, Bill, BillHistory
 from .data.database_data import *
+from ..models.models import Telephone, Call, Bill, BillHistory
 
 
 def clean_data():
-    q = Call.delete().where(Call.source == call_data['source'])
+    q = Call.delete().where(Call.source == telephone_source_data['number'])
+    q.execute()
+    q = Call.delete().where(Call.source == telephone_destination_data['number'])
     q.execute()
     q = BillHistory.delete().where(
         BillHistory.destination == bill_history_data['destination'],
