@@ -5,11 +5,19 @@ from .utils import api_data_return
 api = Blueprint('api', __name__)
 
 
+@api.route('/call/record/', methods=['POST'])
+@api_data_return()
+def call_record(data):
+    if request.method == 'POST':
+        req_data = request.get_json()
+    return data
+
+
 @api.route('/call/start/', methods=['POST'])
 @api_data_return()
 def call_start(data):
     if request.method == 'POST':
-        pass
+        req_data = request.get_json()
     return data
 
 
