@@ -1,5 +1,5 @@
 from flask import (Blueprint, request)
-from .utils import api_data_return, call_request
+from .utils import api_data_return, call_request, telephone_bill_request
 
 
 api = Blueprint('api', __name__)
@@ -26,6 +26,4 @@ def call_end(data):
 @api.route('/telephone/bill/', methods=['GET', 'POST'])
 @api_data_return()
 def get_telephone_bill(data):
-    if request.method == 'POST':
-        pass
-    return data
+    return telephone_bill_request(data, request)

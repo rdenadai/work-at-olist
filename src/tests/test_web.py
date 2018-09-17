@@ -63,9 +63,23 @@ def test_call_end(flask_test_client):
     clean_data()
 
 
-def test_telephone_bill(flask_test_client):
-    resp = flask_test_client.post('/telephone/bill/', data={
-        "telephone_number":  "55994467898",
+def test_telephone_bill_missing_data(flask_test_client):
+    clean_data()
+    data = {
+        "source":  "99999999999",
         "reference_period":  "09/2018",
-    })
-    assert resp.status_code == 405
+    }
+    resp = flask_test_client.post(
+        '/telephone/bill/', data=rapidjson.dumps(telephone_bill_data), content_type='application/json')
+    assert resp.status_code == 409
+    assert rapidjson.loads(resp.data)['status'] == 409
+    clean_data()
+
+
+def test_telephone_bill(flask_test_client):
+    clean_data()
+    resp = flask_test_client.post(
+        '/telephone/bill/', data=rapidjson.dumps(telephone_bill_data), content_type='application/json')
+    assert resp.status_code == 406 or resp.status_code == 201
+    assert rapidjson.loads(resp.data)['status'] == 406 or rapidjson.loads(resp.data)['status'] == 201
+    clean_data()

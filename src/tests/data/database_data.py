@@ -10,6 +10,10 @@ telephone_destination_data = {
     'number': '99999999998',
     'name': 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXY'
 }
+telephone_bill_data = {
+    "telephone_number":  "99999999999",
+    "reference_period":  "09/2018",
+}
 call_data = {
     'type': 'start',
     'timestamp': time(),
