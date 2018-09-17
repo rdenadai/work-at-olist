@@ -1,9 +1,9 @@
 import os
-import dj_database_url
+
 from flask import Flask
 from flask_cors import CORS
 from flask_assets import Environment, Bundle
-from peewee import *
+
 from .controllers.principal import principal
 from .controllers.api import api
 from .settings import DevelopmentConfig, ProductionConfig
@@ -29,22 +29,6 @@ if os.environ.get('PYTHONHOME', None):
     application.config.from_object(ProductionConfig)
 else:
     application.config.from_object(DevelopmentConfig)
-
-# Models
-# ---------------
-# Database connection
-db_conn = None
-if application.config.get('DATABASE_TYPE') == 'sqlite':
-    db_conn = SqliteDatabase(application.config.get('DATABASE_CONN'))
-elif application.config.get('DATABASE_TYPE') == 'psql':
-    conn = dj_database_url.parse(application.config.get('DATABASE_CONN'))
-    data = {
-        'user': conn['USER'],
-        'password': conn['PASSWORD'],
-        'host': conn['HOST'],
-        'port': conn['PORT'],
-    }
-    db_conn = PostgresqlDatabase(conn['NAME'], **data)
 
 # Controllers
 # ---------------

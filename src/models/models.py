@@ -1,5 +1,5 @@
 from peewee import *
-from ..app import db_conn
+from ..database import db_conn
 
 
 class Telephone(Model):
@@ -14,8 +14,8 @@ class Telephone(Model):
 class Call(Model):
     type = CharField(max_length=5)
     timestamp = TimestampField()
-    call_id = IntegerField(index=True, unique=True)
-    source = ForeignKeyField(Telephone)
+    call_id = IntegerField(index=True)
+    source = ForeignKeyField(Telephone, index=True)
     destination = ForeignKeyField(Telephone)
 
     class Meta:
