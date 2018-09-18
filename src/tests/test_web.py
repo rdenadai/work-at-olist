@@ -19,6 +19,22 @@ def flask_test_client():
     ctx.pop()
 
 
+def start_call(flask_test_client):
+    """Support function that start a call."""
+    data = call_data.copy()
+    data['source'] = telephone_source_data['number']
+    data['destination'] = telephone_destination_data['number']
+    return flask_test_client.post('/call/start/', data=rapidjson.dumps(data), content_type='application/json')
+
+
+def end_call(flask_test_client):
+    """Support function that end a call."""
+    data = call_data.copy()
+    data['source'] = telephone_source_data['number']
+    data['destination'] = telephone_destination_data['number']
+    return flask_test_client.post('/call/end/', data=rapidjson.dumps(data), content_type='application/json')
+
+
 def test_call_record(flask_test_client):
     clean_data()
     data = call_data.copy()
@@ -43,10 +59,7 @@ def test_call_record_406(flask_test_client):
 
 def test_call_start(flask_test_client):
     clean_data()
-    data = call_data.copy()
-    data['source'] = telephone_source_data['number']
-    data['destination'] = telephone_destination_data['number']
-    resp = flask_test_client.post('/call/start/', data=rapidjson.dumps(data), content_type='application/json')
+    resp = start_call(flask_test_client)
     assert resp.status_code == 201
     assert rapidjson.loads(resp.data)['status'] == 201
     clean_data()
@@ -54,10 +67,7 @@ def test_call_start(flask_test_client):
 
 def test_call_end(flask_test_client):
     clean_data()
-    data = call_data.copy()
-    data['source'] = telephone_source_data['number']
-    data['destination'] = telephone_destination_data['number']
-    resp = flask_test_client.post('/call/end/', data=rapidjson.dumps(data), content_type='application/json')
+    resp = end_call(flask_test_client)
     assert resp.status_code == 201
     assert rapidjson.loads(resp.data)['status'] == 201
     clean_data()
@@ -70,7 +80,7 @@ def test_telephone_bill_missing_data(flask_test_client):
         "reference_period":  "09/2018",
     }
     resp = flask_test_client.post(
-        '/telephone/bill/', data=rapidjson.dumps(telephone_bill_data), content_type='application/json')
+        '/telephone/bill/', data=rapidjson.dumps(data), content_type='application/json')
     assert resp.status_code == 409
     assert rapidjson.loads(resp.data)['status'] == 409
     clean_data()
@@ -80,6 +90,17 @@ def test_telephone_bill(flask_test_client):
     clean_data()
     resp = flask_test_client.post(
         '/telephone/bill/', data=rapidjson.dumps(telephone_bill_data), content_type='application/json')
-    assert resp.status_code == 406 or resp.status_code == 201
-    assert rapidjson.loads(resp.data)['status'] == 406 or rapidjson.loads(resp.data)['status'] == 201
+    assert resp.status_code in [201, 406]
+    assert rapidjson.loads(resp.data)['status'] in [201, 406]
+    clean_data()
+
+
+def test_telephone_bill_results(flask_test_client):
+    clean_data()
+    start_call(flask_test_client)
+    end_call(flask_test_client)
+    resp = flask_test_client.post(
+        '/telephone/bill/', data=rapidjson.dumps(telephone_bill_data), content_type='application/json')
+    assert resp.status_code in [201, 406]
+    assert len(rapidjson.loads(resp.data)['result']['calls']) > 0
     clean_data()
