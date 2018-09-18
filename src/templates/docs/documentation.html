@@ -3,10 +3,83 @@
 {% block content %}
 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">API Information</h2>
+        <h2 class="mdl-card__title-text"><strong>Project Information</strong></h2>
+    </div>
+    <div class="mdl-card__supporting-text" style="padding-top: 0px !important;">
+        <h6><strong>Description:</strong></h6>
+        <hr />
+        <p>
+            This project is the challenge provided by Olist to their candidates. <br />
+            The aim here is to develop a simple api endpoint to verify candidate skills and know-how.
+        </p>
+
+        <h6><strong>Installation:</strong></h6>
+        <hr />
+        <p>
+            To use the project please, go to the <a href="https://github.com/rdenadai/work-at-olist" target="_blank" rel="noopener">github</a>
+            and follow bellow instructions:
+
+            1. Do a git clone:
+            <pre>
+                <code class="bash">
+$> git clone https://github.com/rdenadai/work-at-olist.git
+                </code>
+            </pre>
+
+            2. Inside the directory create by the git clone command do (please keep in mind that this is a <strong>python 3.6+</strong> project):
+            <pre>
+                <code class="bash">
+$> virtualenv venv
+$> source venv/bin/activate
+$> pip install -r requirements.txt
+                </code>
+            </pre>
+
+            3. If all the above commands went well you can now start the project:<br />
+            <span style="color: #999;">Bellow command, will create the database, run the tests and start a wsgi server in <a href="http://localhost:8000" target="_blank" rel="noopener">http://localhost:8000</a></span>
+            <pre>
+                <code class="bash">
+$> python -m src.sync_db; pytest; gunicorn wsgi --workers=3 --reload
+                </code>
+            </pre>
+        </p>
+        <h6><strong>Work Environment:</strong></h6>
+        <hr />
+        <p>
+            <ul>
+                <li>OS       : <strong>Linux Mint 19 Sara</strong></li>
+                <li>Browser  : <strong>Google Chrome 69.0.3497.100 (Official Build) (64-bit)</strong></li>
+                <li>Browser  : <strong>Firefox Nightly 64.0a1 (2018-09-18) (64-bit)</strong></li>
+                <li>IDE      : <strong>Pycharm 2018.2.3 Community</strong></li>
+                <li>Python   : <strong>3.7.0</strong></li>
+                <li>
+                    Libraries:
+                    <ul>
+                        <li>dj-database-url (0.5.0) : Simple way to parse database strings in heroku.</li>
+                        <li>Flask (1.0.2)           : Minimalist python web framework.</li>
+                        <li>Flask-Assets (0.12)     : Flask plugin to serve static files in a easy way.</li>
+                        <li>Flask-Cors (3.0.6)      : Flask plugin to avoid <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing" target="_blank" rel="noopener">CORS</a></li>
+                        <li>gunicorn (19.9.0)       : WSGI compliance application server.</li>
+                        <li>peewee (3.7.0)          : Python ORM with almost the same api as django ORM.</li>
+                        <li>psycopg2-binary (2.7.5) : Postgresql driver for python.</li>
+                        <li>pytest (3.8.0)          : Excellent python test framework.</li>
+                        <li>python-rapidjson (0.6.3): Need fast json parsing?</li>
+                        <li>jsmin (2.2.2)           : Lib to compress javascript files (used with Flask-Assets)</li>
+                        <li>cssmin (0.2.0)          : Lib to compress css files (used with Flask-Assets)</li>
+                        <li>requests (2.19.1)       : The most well know and well written api to make http requests.</li>
+                    </ul>
+                </li>
+            </ul>
+        </p>
+    </div>
+</div>
+<br />
+<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text"><strong>API Documentation</strong></h2>
     </div>
     <div class="mdl-card__supporting-text">
-        <p>There are 4 (four) api endpoints to be used:</p>
+        <p>There are 4 (four) api endpoints that can be used:</p>
         <ul>
             <li><a href="call/record/">call/record/</a></li>
             <li><a href="call/start/">call/start/</a></li>
@@ -25,11 +98,11 @@
 <br />
 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text"><strong>Start | End a Call</strong></h2>
+        <h2 class="mdl-card__title-text"><strong>TRY : Start | End a Call</strong></h2>
     </div>
     <div class="mdl-card__supporting-text">
         <p>The first endpoint of the api is starting/end a call... to do that make a post request to <strong>call/record/</strong></p>
-        <p>See example bellow to understand how to proceed.</p>
+        <p>See example bellow to understand how to proceed (keep in mind that in our test endpoint bellow only starting a call is possible, if you need to end a call please see END CALL endpoint bellow).</p>
 
         REQUEST message:
         <pre>
@@ -71,7 +144,7 @@
 <br />
 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text"><strong>Start a Call</strong></h2>
+        <h2 class="mdl-card__title-text"><strong>TRY : Start a Call</strong></h2>
     </div>
     <div class="mdl-card__supporting-text">
         <p>The second endpoint of the api is starting a call... to do that make a post request to <strong>call/start/</strong></p>
@@ -116,7 +189,7 @@
 <br />
 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text"><strong>End a Call</strong></h2>
+        <h2 class="mdl-card__title-text"><strong>TRY : End a Call</strong></h2>
     </div>
     <div class="mdl-card__supporting-text">
         <p>The third endpoint of the api is ending a call... to do that make a post request to <strong>call/end/</strong></p>
@@ -162,7 +235,7 @@
 <br />
 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text"><strong>Telephone Bill</strong></h2>
+        <h2 class="mdl-card__title-text"><strong>TRY : Telephone Bill</strong></h2>
     </div>
     <div class="mdl-card__supporting-text">
         <p>Last, but not least is the endpoint which will bring the bill account for some telephone number over a period (in case requested)
@@ -238,7 +311,7 @@
             elem.style.display = 'block'
             code.innerHTML = JSON.stringify(response.data);
         }).catch(function(error) {
-            alert('Por favor, se estiver realizando novamente a mesma chamada ao endpoint da API, operação bloqueada!');
+            alert('Please, if you were trying to call the same API endpoint, the operation is blocked, try another endpoint!');
         });
     };
     // Example code to start a call
@@ -257,7 +330,7 @@
             elem.style.display = 'block'
             code.innerHTML = JSON.stringify(response.data);
         }).catch(function(error) {
-            alert('Por favor, se estiver realizando novamente a mesma chamada ao endpoint da API, operação bloqueada!');
+            alert('Please, if you were trying to call the same API endpoint, the operation is blocked, try another endpoint!');
         });
     };
     // Example code to end a call
@@ -279,7 +352,7 @@
             // Generate new number
             number = gen_number();
         }).catch(function(error) {
-            alert('Por favor, se estiver realizando novamente a mesma chamada ao endpoint da API, operação bloqueada!');
+            alert('Please, if you were trying to call the same API endpoint, the operation is blocked, try another endpoint!');
         });
     };
     // Example code to retrieve bill
@@ -295,7 +368,7 @@
             elem.style.display = 'block'
             code.innerHTML = JSON.stringify(response.data);
         }).catch(function(error) {
-            alert('Por favor, se estiver realizando novamente a mesma chamada ao endpoint da API, operação bloqueada!');
+            alert('Please, if you were trying to call the same API endpoint, the operation is blocked, try another endpoint!');
         });
     };
 </script>
