@@ -1,9 +1,9 @@
 from datetime import datetime
 from .TelephoneBiz import TelephoneBiz
-from ..rules import TelephoneBillVerifier
+from ..verifiers import TelephoneBillVerifier
 from ..biz.BillBiz import BillBiz
 from ..biz.CallBiz import CallBiz
-from ..simple import convert_strtime_to_time, convert_low_time_to_big
+from ..rules import convert_strtime_to_time, convert_low_time_to_big
 from ...database import db_conn
 
 

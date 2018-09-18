@@ -1,9 +1,9 @@
 from datetime import datetime
 import calendar
-from ..simple import calculate_tarif, calculate_total_call_duration
+from ..rules import calculate_tarif, calculate_total_call_duration
 from .BillBiz import BillBiz
 from .TelephoneBiz import TelephoneBiz
-from ..rules import CallVerifier
+from ..verifiers import CallVerifier
 from ...models.models import Call, Bill
 from ...database import db_conn
 
@@ -33,6 +33,7 @@ class CallBiz:
 
     @staticmethod
     def save_call_end(destination, call_id):
+        """After a call end, generate and record the Bill value of the start and end call."""
         call_start = Call.get_or_none(type='start', call_id=call_id)
         call_end = Call.get_or_none(type='end', call_id=call_id)
         if call_start and call_end:

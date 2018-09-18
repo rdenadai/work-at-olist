@@ -59,7 +59,7 @@ def call_request(data, request, type=None):
 
 
 def telephone_bill_request(data, request):
-    if request.method == 'POST':
+    if request.method in ['GET', 'POST']:
         if request.is_json:
             try:
                 req_data = request.get_json()

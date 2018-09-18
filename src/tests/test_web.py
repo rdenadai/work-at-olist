@@ -95,11 +95,22 @@ def test_telephone_bill(flask_test_client):
     clean_data()
 
 
-def test_telephone_bill_results(flask_test_client):
+def test_telephone_bill_results_post_method(flask_test_client):
     clean_data()
     start_call(flask_test_client)
     end_call(flask_test_client)
     resp = flask_test_client.post(
+        '/telephone/bill/', data=rapidjson.dumps(telephone_bill_data), content_type='application/json')
+    assert resp.status_code in [201, 406]
+    assert len(rapidjson.loads(resp.data)['result']['calls']) > 0
+    clean_data()
+
+
+def test_telephone_bill_results_get_method(flask_test_client):
+    clean_data()
+    start_call(flask_test_client)
+    end_call(flask_test_client)
+    resp = flask_test_client.get(
         '/telephone/bill/', data=rapidjson.dumps(telephone_bill_data), content_type='application/json')
     assert resp.status_code in [201, 406]
     assert len(rapidjson.loads(resp.data)['result']['calls']) > 0

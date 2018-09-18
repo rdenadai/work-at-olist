@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta
-from ..business.rules import CallVerifier, TelephoneBillVerifier
-from ..business.simple import check_phone_number
-from ..business.simple import check_timestamp
-from ..business.simple import check_reference_period
-from ..business.simple import calculate_tarif
-from ..business.simple import calculate_total_call_duration
-from ..business.simple import convert_strtime_to_time
-from ..business.simple import convert_low_time_to_big
+from ..business.verifiers import CallVerifier, TelephoneBillVerifier
+from ..business.rules import check_phone_number
+from ..business.rules import check_timestamp
+from ..business.rules import check_reference_period
+from ..business.rules import calculate_tarif
+from ..business.rules import calculate_total_call_duration
+from ..business.rules import convert_strtime_to_time
+from ..business.rules import convert_low_time_to_big
 
 
 def test_call_verifier_all_fields():
