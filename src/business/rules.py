@@ -1,67 +1,84 @@
-from .simple import check_phone_number, check_timestamp, check_reference_period
+from datetime import datetime, timedelta
+from ..settings import TARIF_VALUE, STANDING_CHARGE
 
 
-class Verifier:
-
-    keys = []
-
-    @classmethod
-    def check_for_all_fields(self, data):
-        missing_fields = []
-        for key in self.keys:
-            if key not in data:
-                missing_fields += [key]
-        return missing_fields
-
-
-class CallVerifier(Verifier):
-
-    keys = ['type', 'timestamp', 'call_id', 'source', 'destination']
-
-    @classmethod
-    def normalize_field_values(self, data):
-        data['type'] = str(data.get('type', ''))
-        data['timestamp'] = str(data.get('timestamp', ''))
-        data['source'] = str(data.get('source', ''))
-        data['destination'] = str(data.get('destination', ''))
-
-        data['call_id'] = str(data.get('call_id', 0))
-        for dot in ['.', ',']:
-            data['call_id'] = data['call_id'].replace(dot, '')
-        data['call_id'] = int(data['call_id'])
-        return data
-
-    @classmethod
-    def validate_fields_values(self, data):
-        wrong_field_value = []
-        for key, value in data.items():
-            if key == 'type' and (value not in ['start', 'end']):
-                wrong_field_value += [key]
-            elif key == 'source' and not check_phone_number(value):
-                wrong_field_value += [key]
-            elif key == 'destination' and not check_phone_number(value):
-                wrong_field_value += [key]
-            elif key == 'timestamp' and not check_timestamp(value):
-                wrong_field_value += [key]
-        return wrong_field_value
+def check_phone_number(number):
+    number = str(number) if not isinstance(number, str) else number
+    size = len(number)
+    if 10 <= size <= 11:
+        for n in number:
+            if n not in [str(m) for m in range(0, 10)]:
+                return False
+        return True
+    else:
+        return False
 
 
-class TelephoneBillVerifier(Verifier):
+def check_timestamp(timestamp):
+    timestamp = str(timestamp) if not isinstance(timestamp, str) else timestamp
+    try:
+        datetime.fromtimestamp(float(timestamp))
+        return True
+    except ValueError:
+        return False
+    except TypeError:
+        return False
 
-    keys = ['telephone_number']
 
-    @classmethod
-    def normalize_field_values(self, data):
-        data['telephone_number'] = str(data.get('telephone_number', ''))
-        data['reference_period'] = str(data.get('reference_period', ''))
-        return data
+def check_reference_period(period):
+    year = datetime.now().year
+    period = str(period) if not isinstance(period, str) else period
+    try:
+        period = [int(p) for p in period.split('/')]
+        if len(period) == 2:
+            if 1 <= period[0] <= 12 and 1970 <= period[1] <= year:
+                return True
+            else:
+                return False
+        else:
+            return False
+    except ValueError:
+        return False
+    except TypeError:
+        return False
 
-    @classmethod
-    def validate_fields_values(self, data):
-        wrong_field_value = []
-        for key, value in data.items():
-            if key == 'telephone_number' and not check_phone_number(value):
-                wrong_field_value += [key]
-            if key == 'reference_period' and not check_reference_period(value):
-                wrong_field_value += [key]
-        return wrong_field_value
+
+def calculate_tarif(call_start, call_end):
+    duration = call_end - call_start
+    minutes = int(duration.seconds / 60)
+    t_minutes = (duration.days * 3600) + minutes
+    tarif = STANDING_CHARGE
+    dt_start = call_start
+    for _ in range(0, t_minutes):
+        if dt_start.hour == 6 and dt_start.minute >= 0 and dt_start.second >= 0:
+            tarif += TARIF_VALUE
+
+        dt_start = (dt_start + timedelta(minutes=1))
+        if 6 < dt_start.hour < 22:
+            tarif += TARIF_VALUE
+        elif dt_start.hour == 22 and dt_start.minute == 0 and dt_start.second == 0:
+            tarif += TARIF_VALUE
+
+    return round(tarif, 2)
+
+
+def calculate_total_call_duration(call_start, call_end):
+    duration = call_end - call_start
+    hours = int(duration.seconds / 3600)
+    minutes = int(duration.seconds / 60) % 60
+    seconds = duration.seconds - (60 * minutes + hours * 3600)
+    return f'{hours}h{minutes}m{seconds}s'
+
+
+def convert_strtime_to_time(time_f):
+    for k in ['h', 'm', 's']:
+        time_f = time_f.replace(k, '|')
+    return [int(k) for k in time_f.split('|') if k]
+
+
+def convert_low_time_to_big(low, big):
+    lt = low
+    bg = int(lt / 60) % 60
+    big += bg
+    low = lt - (bg * 60)
+    return low, big

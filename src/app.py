@@ -3,7 +3,6 @@ import os
 from flask import Flask
 from flask_cors import CORS
 from flask_assets import Environment, Bundle
-
 from .controllers.principal import principal
 from .controllers.api import api
 from .settings import DevelopmentConfig, ProductionConfig
