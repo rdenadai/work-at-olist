@@ -2,7 +2,7 @@ import os
 import sys
 import logging
 from .database import db_conn
-from .models.models import Telephone, Call, Bill, BillHistory
+from .models.models import Telephone, Call, Bill
 from .settings import DevelopmentConfig, ProductionConfig
 
 # Configuration
@@ -18,5 +18,5 @@ if config.DEBUG:
 else:
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logging.info('Sync database structure...')
-db_conn.create_tables([Telephone, Call, Bill, BillHistory])
+db_conn.create_tables([Telephone, Call, Bill])
 logging.info('Sync ended...')

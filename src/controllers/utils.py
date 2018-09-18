@@ -1,9 +1,14 @@
 from time import time
+import sys
+import logging
 from functools import wraps
 from flask import Response
 import rapidjson
 from src.business.biz.CallBiz import CallBiz
 from src.business.biz.TelephoneBillBiz import TelephoneBillBiz
+
+
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
 def api_data_return():
@@ -44,6 +49,7 @@ def call_request(data, request, type=None):
                         req_data['type'] = type
                     data = CallBiz(req_data, data).save()
             except Exception as e:
+                logging.info(e)
                 data['status'] = 406
                 data['message'] = 'Not Acceptable : Content type must be application/json'
         else:
@@ -60,6 +66,7 @@ def telephone_bill_request(data, request):
                 if req_data:
                     data = TelephoneBillBiz(req_data, data).save()
             except Exception as e:
+                logging.info(e)
                 data['status'] = 406
                 data['message'] = 'Not Acceptable : Content type must be application/json'
         else:

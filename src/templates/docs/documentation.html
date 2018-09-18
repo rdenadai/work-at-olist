@@ -36,7 +36,7 @@
             <code class="json">
     {
         "type":  "start", // Indicate if it's a call "start" or "end" record;
-        "timestamp":  "1536939832.731359", // The timestamp of when the event occured;
+        "timestamp":  "1537298435.420377", // The timestamp of when the event occured;
         "call_id":  1, // Unique for each call record pair;
         "source":  "99999999999", // The subscriber phone number that originated the call;
         "destination":  "99999999998" // The phone number receiving the call.
@@ -81,7 +81,7 @@
         <pre>
             <code class="json">
     {
-        "timestamp":  "1536939832.731359", // The timestamp of when the event occured;
+        "timestamp":  "1537298435.420377", // The timestamp of when the event occured;
         "call_id":  1, // Unique for each call record pair;
         "source":  "99999999999", // The subscriber phone number that originated the call;
         "destination":  "99999999998" // The phone number receiving the call.
@@ -127,7 +127,7 @@
             <code class="json">
     {
         "type":  "end", // Indicate if it's a call "start" or "end" record;
-        "timestamp":  "1536939832.731359", // The timestamp of when the event occured;
+        "timestamp":  "1537472762.381068", // The timestamp of when the event occured;
         "call_id":  1, // Unique for each call record pair;
         "source":  "99999999999", // The subscriber phone number that originated the call;
         "destination":  "99999999998" // The phone number receiving the call.
@@ -216,12 +216,14 @@
     </div>
 </div>
 <script>
+    var number = Math.floor(Math.random() * 101);
+
     // Example code to start a call
     document.getElementById('try-it-call-record').onclick = function() {
         var data = {
             "type":  "start",
-            "timestamp":  "1536939832.731359",
-            "call_id":  1,
+            "timestamp":  "1537298435.420377",
+            "call_id":  number,
             "source":  "99999999999",
             "destination":  "99999999998"
         };
@@ -239,8 +241,8 @@
     document.getElementById('try-it-call-start').onclick = function() {
         var data = {
             "type":  "start",
-            "timestamp":  "1536939832.731359",
-            "call_id":  1,
+            "timestamp":  "1537298435.420377",
+            "call_id":  number,
             "source":  "99999999999",
             "destination":  "99999999998"
         };
@@ -258,8 +260,8 @@
     document.getElementById('try-it-call-end').onclick = function() {
         var data = {
             "type":  "end",
-            "timestamp":  "1536943424.851679",
-            "call_id":  1,
+            "timestamp":  "1537472762.381068",
+            "call_id":  number,
             "source":  "99999999999",
             "destination":  "99999999998"
         };
@@ -269,6 +271,9 @@
             var code = elem.children[1].children[0];
             elem.style.display = 'block'
             code.innerHTML = JSON.stringify(response.data);
+
+            // Generate new number
+            number = Math.floor(Math.random() * 101);
         }).catch(function(error) {
             console.log(error);
         });
@@ -280,7 +285,7 @@
             "reference_period":  "09/2018"
         };
 
-        axios.get('telephone/bill/', data).then(function(response) {
+        axios.post('telephone/bill/', data).then(function(response) {
             var elem = document.getElementById('telephone-bill-test-result');
             var code = elem.children[1].children[0];
             elem.style.display = 'block'

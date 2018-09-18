@@ -21,9 +21,14 @@ class Call(Model):
     class Meta:
         database = db_conn
         table_name = 'call'
+        indexes = (
+            # create a unique on type/call_id/source
+            (('type', 'call_id', 'source'), True),
+        )
 
 
 class Bill(Model):
+    call_id = IntegerField(index=True)
     destination = ForeignKeyField(Telephone, index=True)
     call_start_date = DateField()
     call_start_time = TimeField()
@@ -33,14 +38,3 @@ class Bill(Model):
     class Meta:
         database = db_conn
         table_name = 'bill'
-
-
-class BillHistory(Model):
-    destination = ForeignKeyField(Telephone, index=True)
-    reference_month = DateField(index=True)
-    total_minutes = IntegerField()
-    total_amount = FloatField()
-
-    class Meta:
-        database = db_conn
-        table_name = 'bill_history'

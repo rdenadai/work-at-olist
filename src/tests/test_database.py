@@ -1,5 +1,5 @@
 from .data.database_data import *
-from ..models.models import Telephone, Call, Bill, BillHistory
+from ..models.models import Telephone, Call, Bill
 
 
 def clean_data():
@@ -7,12 +7,7 @@ def clean_data():
     q.execute()
     q = Call.delete().where(Call.source == telephone_destination_data['number'])
     q.execute()
-    q = BillHistory.delete().where(
-        BillHistory.destination == bill_history_data['destination'],
-        BillHistory.reference_month == bill_history_data['reference_month']
-    )
-    q.execute()
-    q = Bill.delete().where(Bill.destination == bill_data['destination'])
+    q = Bill.delete().where(Bill.call_id == bill_data['call_id'])
     q.execute()
     q = Telephone.delete().where(Telephone.number == telephone_source_data['number'])
     q.execute()
@@ -50,10 +45,3 @@ def test_insert_bill():
     assert Bill.get_or_none(**bill_data)
     clean_data()
 
-
-def test_insert_bill_history():
-    clean_data()
-    bill_history_data['destination'] = get_telephone(telephone_source_data)
-    BillHistory.create(**bill_history_data)
-    assert BillHistory.get_or_none(**bill_history_data)
-    clean_data()

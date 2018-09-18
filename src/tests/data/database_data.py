@@ -22,15 +22,10 @@ call_data = {
     'destination': None,
 }
 bill_data = {
+    'call_id': 1,
     'destination': None,
     'call_start_date': datetime.now(),
     'call_start_time': datetime.now().time(),
     'call_duration': '0h35m42s',
     'call_price': 3.96,
-}
-bill_history_data = {
-    'destination': None,
-    'reference_month': datetime.now(),
-    'total_minutes': 2,
-    'total_amount': 0.54
 }
