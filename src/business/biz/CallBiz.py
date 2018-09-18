@@ -20,7 +20,7 @@ class CallBiz:
 
     @staticmethod
     def get_calls_by_source(source):
-        return Call.select().where(Call.source == source).group_by(Call.call_id)
+        return Call.select().where(Call.source == source)
 
     @staticmethod
     def get_calls_by_period(period):

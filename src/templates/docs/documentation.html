@@ -216,7 +216,11 @@
     </div>
 </div>
 <script>
-    var number = Math.floor(Math.random() * 101);
+    function gen_number() {
+        return Math.floor(Math.random() * 101);
+    };
+
+    var number = gen_number();
 
     // Example code to start a call
     document.getElementById('try-it-call-record').onclick = function() {
@@ -234,7 +238,7 @@
             elem.style.display = 'block'
             code.innerHTML = JSON.stringify(response.data);
         }).catch(function(error) {
-            console.log(error);
+            alert('Por favor, se estiver realizando novamente a mesma chamada ao endpoint da API, operação bloqueada!');
         });
     };
     // Example code to start a call
@@ -253,7 +257,7 @@
             elem.style.display = 'block'
             code.innerHTML = JSON.stringify(response.data);
         }).catch(function(error) {
-            console.log(error);
+            alert('Por favor, se estiver realizando novamente a mesma chamada ao endpoint da API, operação bloqueada!');
         });
     };
     // Example code to end a call
@@ -273,9 +277,9 @@
             code.innerHTML = JSON.stringify(response.data);
 
             // Generate new number
-            number = Math.floor(Math.random() * 101);
+            number = gen_number();
         }).catch(function(error) {
-            console.log(error);
+            alert('Por favor, se estiver realizando novamente a mesma chamada ao endpoint da API, operação bloqueada!');
         });
     };
     // Example code to retrieve bill
@@ -291,7 +295,7 @@
             elem.style.display = 'block'
             code.innerHTML = JSON.stringify(response.data);
         }).catch(function(error) {
-            console.log(error);
+            alert('Por favor, se estiver realizando novamente a mesma chamada ao endpoint da API, operação bloqueada!');
         });
     };
 </script>

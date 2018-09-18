@@ -46,7 +46,7 @@ class TelephoneBillBiz:
                     }
 
                     calls_id = CallBiz.get_calls_by_source(telephone.number)
-                    calls_id = [call.call_id for call in calls_id]
+                    calls_id = list(set([call.call_id for call in calls_id]))
                     bills = BillBiz.get_calls_by_period(calls_id, period)
                     ttime = {'h': 0, 'm': 0, 's': 0}
                     for bill in bills:
