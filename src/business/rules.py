@@ -46,7 +46,7 @@ class CallVerifier(Verifier):
         return wrong_field_value
 
 
-class BillVerifier(Verifier):
+class TelephoneBillVerifier(Verifier):
 
     keys = ['telephone_number']
 

@@ -6,14 +6,15 @@
         <h2 class="mdl-card__title-text">API Information</h2>
     </div>
     <div class="mdl-card__supporting-text">
-        <p>There are 3 (tree) api endpoints to be used:</p>
+        <p>There are 4 (four) api endpoints to be used:</p>
         <ul>
+            <li><a href="call/record/">call/record/</a></li>
             <li><a href="call/start/">call/start/</a></li>
             <li><a href="call/start/">call/end/</a></li>
             <li><a href="telephone/bill/">telephone/bill/</a></li>
         </ul>
         <p>
-            The first and second api calls only accept <strong>POST</strong> method. Because the record in database operations
+            The first, second nd third api calls only accept <strong>POST</strong> method. Because the record in database operations
             about the call.
         </p>
         <p>
@@ -24,10 +25,10 @@
 <br />
 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text"><strong>Start a Call</strong></h2>
+        <h2 class="mdl-card__title-text"><strong>Start | End a Call</strong></h2>
     </div>
     <div class="mdl-card__supporting-text">
-        <p>The first endpoint of the api is starting a call... to do that make a post request to <strong>call/start/</strong></p>
+        <p>The first endpoint of the api is starting/end a call... to do that make a post request to <strong>call/record/</strong></p>
         <p>See example bellow to understand how to proceed.</p>
 
         REQUEST message:
@@ -35,10 +36,55 @@
             <code class="json">
     {
         "type":  "start", // Indicate if it's a call "start" or "end" record;
-        "timestamp":  "1536939832.731359", // The timestamp of when the event occured;
-        "call_id":  70, // Unique for each call record pair;
-        "source":  "55994467898", // The subscriber phone number that originated the call;
-        "destination":  "55994487710" // The phone number receiving the call.
+        "timestamp":  "1537298435.420377", // The timestamp of when the event occured;
+        "call_id":  1, // Unique for each call record pair;
+        "source":  "99999999999", // The subscriber phone number that originated the call;
+        "destination":  "99999999998" // The phone number receiving the call.
+    }
+            </code>
+        </pre>
+        RESPONSE message:
+        <pre>
+            <code class="json">
+    {
+        "status":  200, // status code, following html standard
+        "success":  true, // simple boolean message to validated request sucess
+        "execution_time":  000001, // time in milliseconds that the request took
+        "message":  "Success", // Full message... success or error
+        "result":  null // if any results should be send back to developer
+    }
+            </code>
+        </pre>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+        <div class="btn-right">
+            <button id="try-it-call-record" class="mdl-button mdl-js-button mdl-button--raised">Try it</button>
+        </div>
+        <div id="call-record-test-result" style="display: none;">
+            <strong>RESULT:</strong>
+            <pre>
+                <code class="json"></code>
+            </pre>
+        </div>
+    </div>
+</div>
+<br />
+<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text"><strong>Start a Call</strong></h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+        <p>The second endpoint of the api is starting a call... to do that make a post request to <strong>call/start/</strong></p>
+        <p>See example bellow to understand how to proceed.</p>
+
+        REQUEST message:
+        <pre>
+            <code class="json">
+    {
+        "timestamp":  "1537298435.420377", // The timestamp of when the event occured;
+        "call_id":  1, // Unique for each call record pair;
+        "source":  "99999999999", // The subscriber phone number that originated the call;
+        "destination":  "99999999998" // The phone number receiving the call.
     }
             </code>
         </pre>
@@ -73,7 +119,7 @@
         <h2 class="mdl-card__title-text"><strong>End a Call</strong></h2>
     </div>
     <div class="mdl-card__supporting-text">
-        <p>The second endpoint of the api is ending a call... to do that make a post request to <strong>call/end/</strong></p>
+        <p>The third endpoint of the api is ending a call... to do that make a post request to <strong>call/end/</strong></p>
         <p>See example bellow to understand how to proceed.</p>
 
         REQUEST message:
@@ -81,10 +127,10 @@
             <code class="json">
     {
         "type":  "end", // Indicate if it's a call "start" or "end" record;
-        "timestamp":  "1536939832.731359", // The timestamp of when the event occured;
-        "call_id":  70, // Unique for each call record pair;
-        "source":  "55994467898", // The subscriber phone number that originated the call;
-        "destination":  "55994487710" // The phone number receiving the call.
+        "timestamp":  "1537472762.381068", // The timestamp of when the event occured;
+        "call_id":  1, // Unique for each call record pair;
+        "source":  "99999999999", // The subscriber phone number that originated the call;
+        "destination":  "99999999998" // The phone number receiving the call.
     }
             </code>
         </pre>
@@ -127,7 +173,7 @@
         <pre>
             <code class="json">
     {
-        "telephone_number":  "55994467898", // The subscriber phone number that originated the call;
+        "telephone_number":  "99999999999", // The subscriber phone number that originated the call;
         "reference_period":  "09/2018", // The period to filter, optional;
     }
             </code>
@@ -141,12 +187,12 @@
         "execution_time":  000001, // time in milliseconds that the request took
         "message":  "Success", // Full message... success or error
         "result":  { // if any results should be send back to developer
-            "telephone_number":  "55994467898", // The subscriber phone number that originated the call;
+            "telephone_number":  "99999999999", // The subscriber phone number that originated the call;
             "reference_period":  "09/2018", // The period to filter, optional;
             "total_call_price": 3.96, // Total value for this bill
             "total_call_duration": "0h35m42s", // Total time expend in calls
             "calls": [{ // Each call in the period
-                "destination": "55994487710",
+                "destination": "99999999998",
                 "call_start_date": "14/09/2018",
                 "call_start_time": "10:19:01",
                 "call_duration": "0h35m42s",
@@ -170,14 +216,35 @@
     </div>
 </div>
 <script>
+    var number = Math.floor(Math.random() * 101);
+
+    // Example code to start a call
+    document.getElementById('try-it-call-record').onclick = function() {
+        var data = {
+            "type":  "start",
+            "timestamp":  "1537298435.420377",
+            "call_id":  number,
+            "source":  "99999999999",
+            "destination":  "99999999998"
+        };
+
+        axios.post('call/record/', data).then(function(response) {
+            var elem = document.getElementById('call-record-test-result');
+            var code = elem.children[1].children[0];
+            elem.style.display = 'block'
+            code.innerHTML = JSON.stringify(response.data);
+        }).catch(function(error) {
+            console.log(error);
+        });
+    };
     // Example code to start a call
     document.getElementById('try-it-call-start').onclick = function() {
         var data = {
             "type":  "start",
-            "timestamp":  "1536939832.731359",
-            "call_id":  70,
-            "source":  "55994467898",
-            "destination":  "55994487710"
+            "timestamp":  "1537298435.420377",
+            "call_id":  number,
+            "source":  "99999999999",
+            "destination":  "99999999998"
         };
 
         axios.post('call/start/', data).then(function(response) {
@@ -193,10 +260,10 @@
     document.getElementById('try-it-call-end').onclick = function() {
         var data = {
             "type":  "end",
-            "timestamp":  "1536943424.851679",
-            "call_id":  70,
-            "source":  "55994467898",
-            "destination":  "55994487710"
+            "timestamp":  "1537472762.381068",
+            "call_id":  number,
+            "source":  "99999999999",
+            "destination":  "99999999998"
         };
 
         axios.post('call/end/', data).then(function(response) {
@@ -204,6 +271,9 @@
             var code = elem.children[1].children[0];
             elem.style.display = 'block'
             code.innerHTML = JSON.stringify(response.data);
+
+            // Generate new number
+            number = Math.floor(Math.random() * 101);
         }).catch(function(error) {
             console.log(error);
         });
@@ -211,11 +281,11 @@
     // Example code to retrieve bill
     document.getElementById('try-it-telephone-bill').onclick = function() {
         var data = {
-            "telephone_number":  "55994467898",
+            "telephone_number":  "99999999999",
             "reference_period":  "09/2018"
         };
 
-        axios.get('telephone/bill/', data).then(function(response) {
+        axios.post('telephone/bill/', data).then(function(response) {
             var elem = document.getElementById('telephone-bill-test-result');
             var code = elem.children[1].children[0];
             elem.style.display = 'block'

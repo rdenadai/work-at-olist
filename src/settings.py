@@ -1,5 +1,8 @@
 import os
 
+TARIF_VALUE = .09
+STANDING_CHARGE = .36
+
 
 class Config:
     DEBUG = True

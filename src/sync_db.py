@@ -1,12 +1,22 @@
-import logging
+import os
 import sys
-from .app import application, db_conn
-from .models.models import Telephone, Call, Bill, BillHistory
+import logging
+from .database import db_conn
+from .models.models import Telephone, Call, Bill
+from .settings import DevelopmentConfig, ProductionConfig
 
-if application.config.get('DEBUG', False):
+# Configuration
+# ---------------
+# Import configuration depending on the environment
+if os.environ.get('PYTHONHOME', None):
+    config = ProductionConfig()
+else:
+    config = DevelopmentConfig()
+
+if config.DEBUG:
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 else:
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logging.info('Sync database structure...')
-db_conn.create_tables([Telephone, Call, Bill, BillHistory])
+db_conn.create_tables([Telephone, Call, Bill])
 logging.info('Sync ended...')

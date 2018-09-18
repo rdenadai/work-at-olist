@@ -1,5 +1,5 @@
 from peewee import *
-from ..app import db_conn
+from ..database import db_conn
 
 
 class Telephone(Model):
@@ -14,16 +14,21 @@ class Telephone(Model):
 class Call(Model):
     type = CharField(max_length=5)
     timestamp = TimestampField()
-    call_id = IntegerField(index=True, unique=True)
-    source = ForeignKeyField(Telephone)
+    call_id = IntegerField(index=True)
+    source = ForeignKeyField(Telephone, index=True)
     destination = ForeignKeyField(Telephone)
 
     class Meta:
         database = db_conn
         table_name = 'call'
+        indexes = (
+            # create a unique on type/call_id/source
+            (('type', 'call_id', 'source'), True),
+        )
 
 
 class Bill(Model):
+    call_id = IntegerField(index=True)
     destination = ForeignKeyField(Telephone, index=True)
     call_start_date = DateField()
     call_start_time = TimeField()
@@ -33,14 +38,3 @@ class Bill(Model):
     class Meta:
         database = db_conn
         table_name = 'bill'
-
-
-class BillHistory(Model):
-    destination = ForeignKeyField(Telephone, index=True)
-    reference_month = DateField(index=True)
-    total_minutes = IntegerField()
-    total_amount = FloatField()
-
-    class Meta:
-        database = db_conn
-        table_name = 'bill_history'
